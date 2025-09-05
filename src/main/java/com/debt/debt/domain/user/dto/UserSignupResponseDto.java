@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Schema(description = "회원가입 응답 DTO")
 public class UserSignupResponseDto {
-    @Schema(description = "유저 고유 ID", example = "2")
+    @Schema(description = "ID", example = "2")
     private Long userId;
 
     @Schema(description = "닉네임", example = "유저")
