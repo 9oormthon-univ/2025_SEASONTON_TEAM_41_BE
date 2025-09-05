@@ -12,6 +12,7 @@ public enum ErrorCode {
     DUPLICATE_USER_ID(400, "C002", "이미 존재하는 아이디입니다."),
     INVALID_INPUT_VALUE(400, "C003", "입력 값이 올바르지 않습니다."),
     INVALID_PASSWORD(400, "U003", "비밀번호가 올바르지 않습니다."),
+    INVALID_DEBT_TYPE(400, "U003", "존재하지 않는 부채 유형입니다."),
 
     // 401 UNAUTHORIZED
     UNAUTHORIZED(401, "A001", "인증되지 않은 사용자입니다."),
@@ -20,7 +21,8 @@ public enum ErrorCode {
 
     // 404 NOT_FOUND
     USER_NOT_FOUND(404, "U001", "사용자를 찾을 수 없습니다."),
-    Entity_NOT_FOUND(404, "U002", "객체를 찾을 수 없습니다."),
+    ARTICLE_NOT_FOUND(404, "U002", "게시글을 찾을 수 없습니다."),
+    LIKE_NOT_FOUND(404, "U002", "좋아요를 찾을 수 없습니다."),
 
     // 500 INTERNAL_SERVER_ERROR
     INTERNAL_SERVER_ERROR(500, "S001", "서버 내부 오류가 발생했습니다.");
