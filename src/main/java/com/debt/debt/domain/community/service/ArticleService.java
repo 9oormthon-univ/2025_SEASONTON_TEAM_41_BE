@@ -71,10 +71,12 @@ public class ArticleService {
                 .map(a -> new ArticleIndexResponseDto(
                         a.getId(),
                         a.getTitle(),
+                        a.getContent(),
                         a.getDebtType(),
                         a.getUser().getNickname(),
                         a.getCreatedAt(),
-                        a.getLikes()
+                        a.getLikes(),
+                        commentRepository.countByArticleId(a.getId())
                 ))
                 .collect(Collectors.toList());
     }
@@ -98,6 +100,7 @@ public class ArticleService {
                 article.getUser().getNickname(),
                 article.getCreatedAt(),
                 article.getLikes(),
+                commentRepository.countByArticleId(id),
                 commentDtos);
     }
 }

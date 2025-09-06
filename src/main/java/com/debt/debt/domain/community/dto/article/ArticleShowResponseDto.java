@@ -34,6 +34,9 @@ public class ArticleShowResponseDto{
     @Schema(description = "좋아요수", example="3")
     private Integer likes;
 
-    @Schema(description = "답변")
+    @Schema(description = "댓글수")
+    private Integer commentCount;
+
+    @Schema(description = "댓글")
     private List<CommentShowResponseDto> comments;
 }

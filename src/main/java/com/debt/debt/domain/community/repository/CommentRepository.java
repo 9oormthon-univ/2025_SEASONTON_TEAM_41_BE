@@ -17,4 +17,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query(value = "SELECT * FROM comments WHERE article_id = :id", nativeQuery = true)
     List<Comment> findByArticleId(Long id);
+
+    int countByArticleId(Long articleId);
 }
