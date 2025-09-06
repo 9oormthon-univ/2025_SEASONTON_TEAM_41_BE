@@ -1,9 +1,6 @@
 package com.debt.debt.domain.user.controller;
 
-import com.debt.debt.domain.user.dto.UserLoginRequestDto;
-import com.debt.debt.domain.user.dto.UserLoginResponseDto;
-import com.debt.debt.domain.user.dto.UserSignupRequestDto;
-import com.debt.debt.domain.user.dto.UserSignupResponseDto;
+import com.debt.debt.domain.user.dto.*;
 import com.debt.debt.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,5 +29,17 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponseDto> login(@RequestBody @Valid UserLoginRequestDto dto) {
         return ResponseEntity.ok(userService.login(dto));
+    }
+
+    @Operation(summary = "닉네임 중복 확인")
+    @PostMapping("/signup/distinctNickname")
+    public ResponseEntity<UserDistinctNicknameResponseDto> distinctNickname(@RequestBody @Valid UserDistinctNicknameRequestDto dto) {
+        return ResponseEntity.ok(userService.distinctNickname(dto));
+    }
+
+    @Operation(summary = "이메일 중복 확인")
+    @PostMapping("/signup/distinctEmail")
+    public ResponseEntity<UserDistinctEmailResponseDto> distinctNickname(@RequestBody @Valid UserDistinctEmailRequestDto dto) {
+        return ResponseEntity.ok(userService.distinctEmail(dto));
     }
 }

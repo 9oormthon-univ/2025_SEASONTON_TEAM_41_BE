@@ -1,9 +1,6 @@
 package com.debt.debt.domain.user.service;
 
-import com.debt.debt.domain.user.dto.UserLoginRequestDto;
-import com.debt.debt.domain.user.dto.UserLoginResponseDto;
-import com.debt.debt.domain.user.dto.UserSignupRequestDto;
-import com.debt.debt.domain.user.dto.UserSignupResponseDto;
+import com.debt.debt.domain.user.dto.*;
 import com.debt.debt.domain.user.entity.User;
 import com.debt.debt.domain.user.repository.UserRepository;
 import com.debt.debt.global.exception.CustomException;
@@ -47,5 +44,17 @@ public class UserService {
         String token = jwtUtil.generateToken(user.getEmail());
 
         return new UserLoginResponseDto(user.getId(), user.getNickname(), token);
+    }
+
+    public UserDistinctNicknameResponseDto distinctNickname(UserDistinctNicknameRequestDto dto) {
+        boolean alreadyNickname = userRepository.existsByNickname(dto.getNickname());
+        if(alreadyNickname) return new UserDistinctNicknameResponseDto("사용 불가");
+        else return new UserDistinctNicknameResponseDto("사용 가능");
+    }
+
+    public UserDistinctEmailResponseDto distinctEmail(UserDistinctEmailRequestDto dto) {
+        boolean alreadyEmail = userRepository.existsByEmail(dto.getEmail());
+        if(alreadyEmail) return new UserDistinctEmailResponseDto("사용 불가");
+        else return new UserDistinctEmailResponseDto("사용 가능");
     }
 }
