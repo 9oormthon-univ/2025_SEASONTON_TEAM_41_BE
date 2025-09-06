@@ -24,7 +24,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String nickname;
 
-    private Integer age;
     private String debtType;
     private Integer debtAmount;
+
+    private String ProfileImagePath;
 }

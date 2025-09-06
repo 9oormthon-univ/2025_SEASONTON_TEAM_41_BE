@@ -14,6 +14,6 @@ import lombok.*;
 public class CommentRequestDto {
     @Schema(description = "내용", example="저도요.")
     @NotBlank(message = "필수입니다.")
-    @Pattern(regexp = "^.{0,100}$", message = "100자 이하로 입력해주세요.")
+    @Pattern(regexp = "^.{0,1000}$", message = "1000자 이하로 입력해주세요.")
     private String content;
 }

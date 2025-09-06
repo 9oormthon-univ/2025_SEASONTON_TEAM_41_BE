@@ -28,6 +28,9 @@ public class ArticleIndexResponseDto{
     @Schema(description = "작성자", example="유저")
     private String nickname;
 
+    @Schema(description = "프로필 이미지 경로")
+    private String profileImagePath;
+
     @Schema(description = "생성일", example="2025-05-27T10:15:00")
     private LocalDateTime createdAt;
 

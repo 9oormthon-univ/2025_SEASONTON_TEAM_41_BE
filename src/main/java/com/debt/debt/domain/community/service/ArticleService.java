@@ -80,6 +80,7 @@ public class ArticleService {
                         a.getContent(),
                         a.getDebtType(),
                         a.getUser().getNickname(),
+                        a.getUser().getProfileImagePath(),
                         a.getCreatedAt(),
                         a.getLikes(),
                         commentRepository.countByArticleId(a.getId())
@@ -96,6 +97,7 @@ public class ArticleService {
                                         .map(comment -> new CommentShowResponseDto(
                                                 comment.getContent(),
                                                 comment.getUser().getNickname(),
+                                                comment.getUser().getProfileImagePath(),
                                                 comment.getCreatedAt()))
                                         .collect(Collectors.toList());
 
@@ -104,6 +106,7 @@ public class ArticleService {
                 article.getContent(),
                 article.getDebtType(),
                 article.getUser().getNickname(),
+                article.getUser().getProfileImagePath(),
                 article.getCreatedAt(),
                 article.getLikes(),
                 commentRepository.countByArticleId(id),
