@@ -18,7 +18,7 @@ public class Ledger {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "email", nullable = false)
     private User user;
 
     private LocalDate date;

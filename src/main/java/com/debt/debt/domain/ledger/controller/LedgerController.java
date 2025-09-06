@@ -21,15 +21,15 @@ public class LedgerController {
 
     @PostMapping
     public ApiResponse addLedger(@RequestBody LedgerDto.LedgerRequest request) {
-        User user = userRepository.findByUserId(request.getUserId())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         return ledgerService.addLedger(request, user);
     }
 
-    @GetMapping("/{userId}")
-    public List<LedgerDto.LedgerResponse> getUserLedger(@PathVariable String userId) {
-        return ledgerService.getUserLedger(userId);
+    @GetMapping("/{email}")
+    public List<LedgerDto.LedgerResponse> getUserLedger(@PathVariable String email) {
+        return ledgerService.getUserLedger(email);
     }
 
 //    @GetMapping("/{userId}/monthly")
@@ -39,11 +39,11 @@ public class LedgerController {
 //        return ledgerService.getMonthlyLedger(userId, year, month);
 //    }
 
-    @GetMapping("/{userId}/monthly/income-expense")
-    public ApiResponse getMonthlyIncomeAndExpense(@PathVariable String userId,
+    @GetMapping("/{email}/monthly/income-expense")
+    public ApiResponse getMonthlyIncomeAndExpense(@PathVariable String email,
                                                   @RequestParam int year,
                                                   @RequestParam int month) {
-        return ledgerService.getMonthlyIncomeAndExpense(userId, year, month);
+        return ledgerService.getMonthlyIncomeAndExpense(email, year, month);
     }
 
     @PutMapping("/{ledgerId}")

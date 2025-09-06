@@ -11,7 +11,7 @@ public class LedgerDto {
     @AllArgsConstructor
     @Builder
     public static class LedgerRequest {
-        private String userId;
+        private String email;
         private LocalDate date;
         private Integer amount;
         private String category;
