@@ -25,9 +25,6 @@ public class UserService {
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .nickname(dto.getNickname())
-                .age(dto.getAge())
-                .debtType(dto.getDebtType())
-                .debtAmount(dto.getDebtAmount())
                 .build();
 
         userRepository.save(user);

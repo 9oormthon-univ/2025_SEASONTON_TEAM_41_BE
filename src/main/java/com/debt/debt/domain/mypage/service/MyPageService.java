@@ -46,7 +46,7 @@ public class MyPageService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        return new MyPageResponseDto(user.getNickname(), user.getAge(), user.getDebtType(), user.getDebtAmount(),user.getProfileImagePath());
+        return new MyPageResponseDto(user.getNickname(),user.getEmail(),user.getProfileImagePath());
     }
 
     @Transactional
@@ -55,9 +55,8 @@ public class MyPageService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         target.setNickname(requestDto.getNickname());
-        target.setAge(requestDto.getAge());
-        target.setDebtType(requestDto.getDebtType());
-        target.setDebtAmount(requestDto.getDebtAmount());
+//        target.setDebtType(requestDto.getDebtType());
+//        target.setDebtAmount(requestDto.getDebtAmount());
 
         MultipartFile file = requestDto.getProfileImage();
         if (file != null && !file.isEmpty()) {
