@@ -26,7 +26,8 @@ public enum ErrorCode {
     LIKE_NOT_FOUND(404, "U002", "좋아요를 찾을 수 없습니다."),
 
     // 500 INTERNAL_SERVER_ERROR
-    INTERNAL_SERVER_ERROR(500, "S001", "서버 내부 오류가 발생했습니다.");
+    INTERNAL_SERVER_ERROR(500, "S001", "서버 내부 오류가 발생했습니다."),
+    LEDGER_NOT_FOUND(404, "L001", "해당 가계부 내역을 찾을 수 없습니다.");
 
     private final int status;
     private final String code;

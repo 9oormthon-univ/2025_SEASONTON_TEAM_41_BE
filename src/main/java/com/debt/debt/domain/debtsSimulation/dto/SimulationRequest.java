@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class SimulationRequest {
-    private String userId;
+    private String email;
     private Double interestRate;
     private Integer monthlyPayment;
     private Integer targetPeriodMonths;
