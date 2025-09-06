@@ -20,7 +20,7 @@ public class DebtSimulation {
 
     //어떤 유저의 시뮬레이션인가?
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "email")
     private User user;
 
     //시뮬레이션 타입 (가격 기반 혹은 기간 기반)

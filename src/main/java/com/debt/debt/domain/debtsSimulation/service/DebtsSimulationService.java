@@ -71,7 +71,7 @@ public class DebtsSimulationService {
     public SimulationResponse runSimulation(SimulationRequest request) {
         validateOneInputOnly(request);
 
-        User user = userRepository.findByUserId(request.getUserId())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 사용자"));
 
         double principal = (user.getDebtAmount() != null ? user.getDebtAmount() : 0) * 10_000;
