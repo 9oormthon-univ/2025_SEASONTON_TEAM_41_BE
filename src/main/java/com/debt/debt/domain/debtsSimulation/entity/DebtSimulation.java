@@ -27,13 +27,15 @@ public class DebtSimulation {
     @Enumerated(EnumType.STRING)
     private SimulationType type;
 
-    private Integer monthlyPayment; //월 상환 목표 금액!
+    private Integer monthlyPayment; //월 상환 목표 금액
     private Integer targetPeriodMonths; //목표 기간 (개월 단위)
     private Double interestRate; //연 이자율 (퍼센트에이지)
+    private String repaymentType; //상환 방식: 원리금균등/원금균등/만기일시
 
-    private Integer requiredMonthlyPayment; //기간 기반 입력 시 결과
-    private Integer expectedPeriodMonths; //금액 기반 입력 시 결과
+    private Integer requiredMonthlyPayment; //기간 기반 입력 시 결과 (월납입)
+    private Integer expectedPeriodMonths; //금액 기반 입력 시 결과 (개월 수)
     private LocalDate targetEndDate; //예상/목표 종료일
+    private Long finalLumpPayment; //만기일시 방식에서 만기 시 지급해야 할 일시금(원 단위)
 
     private LocalDate createdAt;
 }
