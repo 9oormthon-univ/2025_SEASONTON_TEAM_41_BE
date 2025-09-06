@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name="MyPage")
@@ -36,7 +37,7 @@ public class MyPageController{
 
     @Operation(summary = "마이페이지 수정")
     @PatchMapping("/edit")
-    public ResponseEntity<MyPageEditResponseDto> edit(@Valid @RequestBody MyPageEditRequestDto requestDto, @AuthenticationPrincipal CustomUserDetails userDetails){
+    public ResponseEntity<MyPageEditResponseDto> edit(@Valid @RequestBody MyPageEditRequestDto requestDto, @AuthenticationPrincipal CustomUserDetails userDetails)throws IOException {
         Long userId = userDetails.getUser().getId();
         MyPageEditResponseDto responseDto= service.update(userId,requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);

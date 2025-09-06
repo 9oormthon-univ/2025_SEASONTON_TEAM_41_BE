@@ -21,4 +21,7 @@ public class MyPageResponseDto{
 
     @Schema(description = "부채 금액(만)", example = "600")
     private Integer debtAmount;
+
+    @Schema(description = "프로필 이미지 경로")
+    private String profileImagePath;
 }

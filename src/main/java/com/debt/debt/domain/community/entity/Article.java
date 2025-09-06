@@ -22,10 +22,10 @@ public class Article{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,length=30)
+    @Column(nullable = false,length=100)
     private String title;
 
-    @Column(nullable = false,length=100)
+    @Column(nullable = false,length=1000)
     private String content;
 
     @Enumerated(EnumType.STRING)

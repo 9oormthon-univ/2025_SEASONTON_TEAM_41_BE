@@ -18,7 +18,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,11 +40,13 @@ public class MyPageService {
     @Autowired
     private LikeRepository likeRepository;
 
+    private final String uploadDir = "uploads/";
+
     public MyPageResponseDto show(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        return new MyPageResponseDto(user.getNickname(), user.getAge(), user.getDebtType(), user.getDebtAmount());
+        return new MyPageResponseDto(user.getNickname(), user.getAge(), user.getDebtType(), user.getDebtAmount(),user.getProfileImagePath());
     }
 
     @Transactional
@@ -52,10 +59,27 @@ public class MyPageService {
         target.setDebtType(requestDto.getDebtType());
         target.setDebtAmount(requestDto.getDebtAmount());
 
+        MultipartFile file = requestDto.getProfileImage();
+        if (file != null && !file.isEmpty()) {
+            String uploadDir = "uploads/";
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path path = Paths.get(uploadDir + fileName);
+
+            try {
+                Files.createDirectories(path.getParent());
+                Files.write(path, file.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("파일 저장 실패");
+            }
+
+            target.setProfileImagePath("/uploads/" + fileName);
+        }
+
         userRepository.save(target);
         return new MyPageEditResponseDto("수정이 완료되었습니다.");
-
     }
+
 
     public List<ArticleIndexResponseDto> index(String type, Long userId) {
         List<Article> articles;
@@ -78,6 +102,7 @@ public class MyPageService {
                         a.getContent(),
                         a.getDebtType(),
                         a.getUser().getNickname(),
+                        a.getUser().getProfileImagePath(),
                         a.getCreatedAt(),
                         a.getLikes(),
                         commentRepository.countByArticleId(a.getId())

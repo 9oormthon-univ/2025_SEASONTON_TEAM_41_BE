@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,4 +30,7 @@ public class MyPageEditRequestDto {
 
     @Schema(description = "부채 금액(만)", example = "600")
     private Integer debtAmount;
+
+    @Schema(description = "프로필 이미지 파일")
+    private MultipartFile profileImage;
 }
