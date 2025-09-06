@@ -29,7 +29,7 @@ public class LedgerService {
     private final UserRepository userRepository;
 
     public ApiResponse addLedger(LedgerDto.LedgerRequest request, User user) {
-        log.info("addLedger() 호출, userId: {}", request.getUserId());
+        log.info("addLedger() 호출, email: {}", request.getEmail());
 
 //        User user = userRepository.findByUserId(request.getUserId())
 //                .orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -49,13 +49,13 @@ public class LedgerService {
     }
 
     //특정 유저 내역 조회
-    public List<LedgerDto.LedgerResponse> getUserLedger(String userId) {
-        log.info("getUserLedger() 호출, userId: {}", userId);
+    public List<LedgerDto.LedgerResponse> getUserLedger(String email) {
+        log.info("getUserLedger() 호출, email: {}", email);
 
-        User user = userRepository.findByUserId(userId)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        log.info("사용자 내역 조회 완료, userId: {}", userId);
+        log.info("사용자 내역 조회 완료, userId: {}", email);
         return ledgerRepository.findByUser(user).stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
@@ -76,8 +76,8 @@ public class LedgerService {
 //    }
 
     //월별 지출/수입 내역 조회
-    public ApiResponse getMonthlyIncomeAndExpense(String userId, int year, int month) {
-        User user = userRepository.findByUserId(userId)
+    public ApiResponse getMonthlyIncomeAndExpense(String email, int year, int month) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         YearMonth ym = YearMonth.of(year, month);
