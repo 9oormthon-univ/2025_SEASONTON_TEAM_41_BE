@@ -22,7 +22,7 @@ public class ArticleShowResponseDto{
     @Schema(description = "내용", example="빚이 너무 많아요.")
     private String content;
 
-    @Schema(description = "부채 유형", example="학자금대출")
+    @Schema(description = "부채 유형", example="학자금")
     private DebtType debtType;
 
     @Schema(description = "작성자", example="유저")

@@ -5,9 +5,9 @@ import com.debt.debt.global.exception.type.ErrorCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum DebtType {
-    학자금대출("학자금대출"),
-    신용대출("신용대출"),
-    전세대출("전세대출"),
+    학자금("학자금"),
+    카드빚("카드빚"),
+    대출("대출"),
     기타("기타");
 
     private final String koreanName;

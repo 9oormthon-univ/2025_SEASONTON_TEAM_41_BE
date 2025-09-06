@@ -19,7 +19,7 @@ public class ArticleIndexResponseDto{
     @Schema(description = "제목", example="게시글")
     private String title;
 
-    @Schema(description = "부채 유형", example="학자금대출")
+    @Schema(description = "부채 유형", example="학자금")
     private DebtType debtType;
 
     @Schema(description = "작성자", example="유저")

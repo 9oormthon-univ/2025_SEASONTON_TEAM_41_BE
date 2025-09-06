@@ -23,6 +23,6 @@ public class ArticleRequestDto {
     @Pattern(regexp = "^.{0,100}$", message = "100자 이하로 입력해주세요.")
     private String content;
 
-    @Schema(description = "부채 유형", example="학자금대출")
+    @Schema(description = "부채 유형", example="학자금")
     private DebtType debtType;
 }
