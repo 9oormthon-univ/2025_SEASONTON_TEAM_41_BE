@@ -37,8 +37,9 @@ public class ArticleController{
     @Operation(summary = "모든 게시글 표시")
     @GetMapping("")
     public ResponseEntity<List<ArticleIndexResponseDto>> getAll(@RequestParam(required = false, defaultValue = "LATEST") String sort,// LATEST, LIKE
-                                                                @RequestParam(required = false) String debtType) {
-        List<ArticleIndexResponseDto> responseDtos = service.index(sort,debtType);
+                                                                @RequestParam(required = false) String debtType,
+                                                                @RequestParam(required = false) String search) {
+        List<ArticleIndexResponseDto> responseDtos = service.index(sort,debtType,search);
         return ResponseEntity.status(HttpStatus.OK).body(responseDtos);
     }
 
