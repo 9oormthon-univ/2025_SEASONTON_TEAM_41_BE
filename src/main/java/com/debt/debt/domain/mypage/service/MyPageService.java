@@ -5,6 +5,7 @@ import com.debt.debt.domain.community.entity.Article;
 import com.debt.debt.domain.community.entity.DebtType;
 import com.debt.debt.domain.community.entity.Like;
 import com.debt.debt.domain.community.repository.ArticleRepository;
+import com.debt.debt.domain.community.repository.CommentRepository;
 import com.debt.debt.domain.community.repository.LikeRepository;
 import com.debt.debt.domain.mypage.dto.MyPageEditRequestDto;
 import com.debt.debt.domain.mypage.dto.MyPageEditResponseDto;
@@ -29,6 +30,8 @@ public class MyPageService {
     private UserRepository userRepository;
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private CommentRepository commentRepository;
     @Autowired
     private LikeRepository likeRepository;
 
@@ -72,10 +75,12 @@ public class MyPageService {
                 .map(a -> new ArticleIndexResponseDto(
                         a.getId(),
                         a.getTitle(),
+                        a.getContent(),
                         a.getDebtType(),
                         a.getUser().getNickname(),
                         a.getCreatedAt(),
-                        a.getLikes()
+                        a.getLikes(),
+                        commentRepository.countByArticleId(a.getId())
                 ))
                 .collect(Collectors.toList());
     }

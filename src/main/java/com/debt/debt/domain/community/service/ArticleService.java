@@ -52,13 +52,19 @@ public class ArticleService {
         return new ArticleResponseDto(created.getId(), "게시글이 작성되었습니다.");
     }
 
-    public List<ArticleIndexResponseDto> index(String sort, String debtType) {
+    public List<ArticleIndexResponseDto> index(String sort, String debtType,String search) {
         List<Article> articles;
 
         if(debtType != null && !debtType.isEmpty()) {
             articles = articleRepository.findByDebtType(DebtType.fromKoreanName(debtType));
         } else {
             articles = articleRepository.findAll();
+        }
+
+        if (search != null && !search.isEmpty()) {
+            articles = articles.stream()
+                    .filter(a -> a.getTitle().contains(search) || a.getContent().contains(search))
+                    .collect(Collectors.toList());
         }
 
         if("LIKE".equalsIgnoreCase(sort)) {
@@ -71,10 +77,12 @@ public class ArticleService {
                 .map(a -> new ArticleIndexResponseDto(
                         a.getId(),
                         a.getTitle(),
+                        a.getContent(),
                         a.getDebtType(),
                         a.getUser().getNickname(),
                         a.getCreatedAt(),
-                        a.getLikes()
+                        a.getLikes(),
+                        commentRepository.countByArticleId(a.getId())
                 ))
                 .collect(Collectors.toList());
     }
@@ -98,6 +106,7 @@ public class ArticleService {
                 article.getUser().getNickname(),
                 article.getCreatedAt(),
                 article.getLikes(),
+                commentRepository.countByArticleId(id),
                 commentDtos);
     }
 }

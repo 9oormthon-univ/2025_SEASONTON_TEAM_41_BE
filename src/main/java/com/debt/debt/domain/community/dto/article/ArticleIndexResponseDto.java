@@ -19,6 +19,9 @@ public class ArticleIndexResponseDto{
     @Schema(description = "제목", example="게시글")
     private String title;
 
+    @Schema(description = "내용", example="빚이 너무 많아요")
+    private String contet;
+
     @Schema(description = "부채 유형", example="학자금")
     private DebtType debtType;
 
@@ -30,4 +33,7 @@ public class ArticleIndexResponseDto{
 
     @Schema(description = "좋아요수", example="3")
     private Integer likes;
+
+    @Schema(description = "댓글수", example="2")
+    private Integer commentCount;
 }
