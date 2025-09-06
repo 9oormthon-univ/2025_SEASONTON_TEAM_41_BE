@@ -17,4 +17,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findByDebtType(DebtType debtType);
 
     Optional<Article> findById(Long id);
+
+    List<Article> findByUserId(Long userId);
 }

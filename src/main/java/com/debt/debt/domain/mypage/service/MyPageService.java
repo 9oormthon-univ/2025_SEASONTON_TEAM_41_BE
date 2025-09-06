@@ -1,5 +1,11 @@
 package com.debt.debt.domain.mypage.service;
 
+import com.debt.debt.domain.community.dto.article.ArticleIndexResponseDto;
+import com.debt.debt.domain.community.entity.Article;
+import com.debt.debt.domain.community.entity.DebtType;
+import com.debt.debt.domain.community.entity.Like;
+import com.debt.debt.domain.community.repository.ArticleRepository;
+import com.debt.debt.domain.community.repository.LikeRepository;
 import com.debt.debt.domain.mypage.dto.MyPageEditRequestDto;
 import com.debt.debt.domain.mypage.dto.MyPageEditResponseDto;
 import com.debt.debt.domain.mypage.dto.MyPageResponseDto;
@@ -12,11 +18,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class MyPageService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ArticleRepository articleRepository;
+    @Autowired
+    private LikeRepository likeRepository;
 
     public MyPageResponseDto show(Long id) {
         User user = userRepository.findById(id)
@@ -38,5 +52,31 @@ public class MyPageService {
         userRepository.save(target);
         return new MyPageEditResponseDto("수정이 완료되었습니다.");
 
+    }
+
+    public List<ArticleIndexResponseDto> index(String type, Long userId) {
+        List<Article> articles;
+
+        List<Like> likes = likeRepository.findByUserId(userId);
+
+        if("MY".equalsIgnoreCase(type))
+            articles = articleRepository.findByUserId(userId);
+        else if("LIKE".equalsIgnoreCase(type))
+            articles = likes.stream()
+                    .map(Like::getArticle)
+                    .toList();
+        else throw new CustomException(ErrorCode.INVALID_ACTIVITY_TYPE);
+
+
+        return articles.stream()
+                .map(a -> new ArticleIndexResponseDto(
+                        a.getId(),
+                        a.getTitle(),
+                        a.getDebtType(),
+                        a.getUser().getNickname(),
+                        a.getCreatedAt(),
+                        a.getLikes()
+                ))
+                .collect(Collectors.toList());
     }
 }
