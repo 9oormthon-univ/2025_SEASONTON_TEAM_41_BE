@@ -1,5 +1,6 @@
 package com.debt.debt.domain.mypage.controller;
 
+import com.debt.debt.domain.community.dto.article.ArticleIndexResponseDto;
 import com.debt.debt.domain.mypage.dto.MyPageEditRequestDto;
 import com.debt.debt.domain.mypage.dto.MyPageEditResponseDto;
 import com.debt.debt.domain.mypage.dto.MyPageResponseDto;
@@ -15,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name="card-controller")
+import java.util.List;
+
+@Tag(name="MyPage")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/mypage")
@@ -37,5 +40,13 @@ public class MyPageController{
         Long userId = userDetails.getUser().getId();
         MyPageEditResponseDto responseDto= service.update(userId,requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
+
+    @Operation(summary = "내 활동 게시글 표시")
+    @GetMapping("/activity")
+    public ResponseEntity<List<ArticleIndexResponseDto>> getAll(@RequestParam String type, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long userId = userDetails.getUser().getId();
+        List<ArticleIndexResponseDto> responseDtos = service.index(type,userId);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDtos);
     }
 }
