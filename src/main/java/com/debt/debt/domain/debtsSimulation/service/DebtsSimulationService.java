@@ -45,9 +45,8 @@ public class DebtsSimulationService {
     //월 상환액이 주어졌을 때 필요한 개월 수
     private int calculateMonthsForPayment(double principal, double monthlyRate, double monthlyPayment) {
         if (monthlyPayment <= 0) throw new IllegalArgumentException("월 상환액은 1원 이상이어야 합니다.");
-        if (principal == 0) {
-            return (int) Math.ceil(principal / monthlyPayment);
-        }
+        if (principal == 0) return 0;
+
         double interestOnly = principal * monthlyRate;
         if (monthlyPayment <= interestOnly) {
             throw new IllegalArgumentException("월 상환액이 월 이자(" + (long)interestOnly + "원) 이하라 상환이 불가능합니다.");
@@ -72,10 +71,10 @@ public class DebtsSimulationService {
     public SimulationResponse runSimulation(SimulationRequest request) {
         validateOneInputOnly(request);
 
-        User user = userRepository.findById(request.getUserId())
+        User user = userRepository.findByUserId(request.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 사용자"));
 
-        double principal = user.getDebtAmount();
+        double principal = (user.getDebtAmount() != null ? user.getDebtAmount() : 0) * 10_000;
         double monthlyRate = request.getInterestRate() / 12.0 / 100.0; //월 이자율 계산
 
         Integer requiredMonthlyPayment = null;
@@ -124,9 +123,18 @@ public class DebtsSimulationService {
 
         simulationRepository.save(simulation);
 
+        Integer expectedPeriodYears = null;
+        Integer expectedPeriodRemainingMonths = null;
+        if (expectedPeriodMonths != null) {
+            expectedPeriodYears = expectedPeriodMonths / 12;
+            expectedPeriodRemainingMonths = expectedPeriodMonths % 12;
+        }
+
         return SimulationResponse.builder()
                 .requiredMonthlyPayment(requiredMonthlyPayment)
                 .expectedPeriodMonths(expectedPeriodMonths)
+                .expectedPeriodYears(expectedPeriodYears)
+                .expectedPeriodRemainingMonths(expectedPeriodRemainingMonths)
                 .targetEndDate(targetEndDate)
                 .build();
     }
